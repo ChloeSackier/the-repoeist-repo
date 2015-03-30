@@ -19,3 +19,7 @@ class battery(component):               #Batteries feature a voltage characteris
 class resistor(component):              #Resistors feature a resistance characteristic
     def __init__(self, resistance):
         self.resistance = resistance
+
+A = matrix( [[0, 0, 1, -1], [0, -resistance, 1, -1], [1, 1, 0, 0], [0, 0, 0, 1]] )
+b = matrix( [voltage], [0], [0], [0]] )
+x = np.solve(A, b)                     #To solve matrix equation Ax=b
