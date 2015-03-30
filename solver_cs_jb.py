@@ -20,6 +20,17 @@ class resistor(component):              #Resistors feature a resistance characte
     def __init__(self, resistance):
         self.resistance = resistance
 
+batteries = []
+resistors = []
+
+b = input("Number of batteries: ")
+r = input("Number of resistors: ")
+
+for i in range(b):
+    newBat = input("Battery info as Node1, Node2, Volts: ")
+    batteries.append(battery(newBat[1], newBat[2], newBat[3])
+
+
 A = matrix( [[0, 0, 1, -1], [0, -resistance, 1, -1], [1, 1, 0, 0], [0, 0, 0, 1]] )
-b = matrix( [voltage], [0], [0], [0]] )
+b = matrix( [[voltage], [0], [0], [0]] )
 x = np.solve(A, b)                     #To solve matrix equation Ax=b
