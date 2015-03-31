@@ -15,25 +15,33 @@ class component:                        #Every component has two terminals, volt
         self.vnode2 = 0
 
 class battery(component):               #Batteries feature a voltage characteristic
-    def __init__(self, voltage):
+    def __init__(self, node1, node2, voltage):
         self.voltage = voltage
+        self.node1 = node1
+        self.node2 = node2
+        self.vnode1 = 0
+        self.vnode2 = 0
 
 class resistor(component):              #Resistors feature a resistance characteristic
-    def __init__(self, resistance):
+    def __init__(self, node1, node2, resistance):
         self.resistance = resistance
+        self.node1 = node1
+        self.node2 = node2
+        self.vnode1 = 0
+        self.vnode2 = 0
 
 def search(node, listName, listItem):
-    for i in range(batteries):
-        if batteries[i].node1 == node && not(listname=="batteries" && listItem==i):
+    for i in range(len(batteries)):
+        if batteries[i].node1 == node and not(listName=="batteries" and listItem==i):
             return "batteries",i,1
-        elif batteries[i].node2 == node && not(listname=="batteries" && listItem==i):
+        elif batteries[i].node2 == node and not(listName=="batteries" and listItem==i):
             return "batteries",i,2
             
-    for i in range(resistors):
-        if resistors[i].node1 == node && not(listname=="resistors" && listItem==i):
+    for i in range(len(resistors)):
+        if resistors[i].node1 == node and not(listName=="resistors" and listItem==i):
             return "resistors",i,1
-        elif resistor[i].node2 == node && not(listname=="resistors" && listItem==i):
-            return "resistor",i,2
+        elif resistors[i].node2 == node and not(listName=="resistors" and listItem==i):
+            return "resistors",i,2
 
 batteries = []
 resistors = []
@@ -43,29 +51,39 @@ r = input("Number of resistors: ")
 
 for i in range(b):                  
     newBat = input("Battery info as Node1, Node2, Volts: ")
-    batteries.append(battery(newBat[0], newBat[1], newBat[2])
+    batteries.append(battery(newBat[0], newBat[1], newBat[2]))
 
 for i in range(r):
     newRes = input("Resistor info as Node1, Node2, Resistance: ")
-    resistors.append(resistor(newRes[0], newRes[1], newRes[2])
-    
+    resistors.append(resistor(newRes[0], newRes[1], newRes[2]))
+
+startNode="I didn't find nothin"
+
+for i in range(len(batteries)):
+    if search(batteries[i].node1, "batteries", i)[0] == "resistors":
+        startNode = "battery",i,1,batteries[i].node1
+        break
+    elif search(batteries[i].node2, "batteries", i)[0] == "resistors":
+        startNode = "battery",i,2,batteries[i].node2
+        break
+
+print startNode
+
 totalBat = 0
 
-for i in batteries
-    totalBat += bat.voltage
-    
+for i in range(len(batteries)):
+    totalBat += batteries[i].voltage
+
 totalRes = 0
 
-for i in resistors
-    totalRes += res.resistance
+for i in range(len(resistors)):
+    totalRes += resistors[i].resistance
 #\_-O-_/
 I = totalBat / totalRes
 
 for i in batteries:
+    pass
 
-for i in resistors:
-    voltdrop = I * resistance
+#for i in range(len(resistors)):
+#    voltdrop = I * resistance
 
-A = matrix( [[0, 0, 1, -1], [0, -resistance, 1, -1], [1, 1, 0, 0], [0, 0, 0, 1]] )
-b = matrix( [[voltage], [0], [0], [0]] )
-x = np.solve(A, b)                     #To solve matrix equation Ax=b
