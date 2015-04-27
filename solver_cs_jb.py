@@ -7,6 +7,8 @@
 
 #Basic class definitions#
 
+import numpy
+
 class component:                        #Every component has two terminals, voltages at said nodes
     def __init__(self, node1, node2):
         self.node1 = node1
@@ -49,6 +51,12 @@ resistors = []
 b = input("Number of batteries: ")
 r = input("Number of resistors: ")
 
+dimension = 2*b + r - 2
+print dimension
+
+a = numpy.zeros(shape=(dimension,dimension))
+print a
+
 for i in range(b):                  
     newBat = input("Battery info as Node1, Node2, Volts: ")
     batteries.append(battery(newBat[0], newBat[1], newBat[2]))
@@ -60,19 +68,28 @@ for i in range(r):
 nodeLists = []
 
 for batt in batteries:
-    if (('node'+str(batt.node1)) not in nodeLists):
-        nodeLists.append('node'+str(batt.node1))
+    if ((str(batt.node1)) not in nodeLists):
+        nodeLists.append(str(batt.node1))
+
+    if ((str(batt.node2)) not in nodeLists):
+        nodeLists.append(str(batt.node2))
 
 for res in resistors:
-    if (('node'+str(res.node1)) not in nodeLists):
-        nodeLists.append('node'+str(res.node1))
+    if ((str(res.node1)) not in nodeLists):
+        nodeLists.append(str(res.node1))
 
-for batt in batteries:
-    if (('node'+str(batt.node2)) not in nodeLists):
-        nodeLists.append('node'+str(batt.node2))
-
-for res in resistors:
-    if (('node'+str(res.node2)) not in nodeLists):
-        nodeLists.append('node'+str(res.node2))
+    if ((str(res.node2)) not in nodeLists):
+        nodeLists.append(str(res.node2))
 
 print nodeLists
+
+gndNode = input("Which node should be ground? ")
+
+nodeLists.remove(str(gndNode))
+
+print nodeLists
+
+for i in nodeLists:
+
+    for batt in batteries:
+        pass
