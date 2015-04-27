@@ -57,33 +57,22 @@ for i in range(r):
     newRes = input("Resistor info as Node1, Node2, Resistance: ")
     resistors.append(resistor(newRes[0], newRes[1], newRes[2]))
 
-startNode="I didn't find nothin"
+nodeLists = []
 
-for i in range(len(batteries)):
-    if search(batteries[i].node1, "batteries", i)[0] == "resistors":
-        startNode = "battery",i,1,batteries[i].node1
-        break
-    elif search(batteries[i].node2, "batteries", i)[0] == "resistors":
-        startNode = "battery",i,2,batteries[i].node2
-        break
+for batt in batteries:
+    if (('node'+str(batt.node1)) not in nodeLists):
+        nodeLists.append('node'+str(batt.node1))
 
-print startNode
+for res in resistors:
+    if (('node'+str(res.node1)) not in nodeLists):
+        nodeLists.append('node'+str(res.node1))
 
-totalBat = 0
+for batt in batteries:
+    if (('node'+str(batt.node2)) not in nodeLists):
+        nodeLists.append('node'+str(batt.node2))
 
-for i in range(len(batteries)):
-    totalBat += batteries[i].voltage
+for res in resistors:
+    if (('node'+str(res.node2)) not in nodeLists):
+        nodeLists.append('node'+str(res.node2))
 
-totalRes = 0
-
-for i in range(len(resistors)):
-    totalRes += resistors[i].resistance
-#\_-O-_/
-I = totalBat / totalRes
-
-for i in batteries:
-    pass
-
-#for i in range(len(resistors)):
-#    voltdrop = I * resistance
-
+print nodeLists
