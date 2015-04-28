@@ -148,10 +148,10 @@ for i in nodeLists:
     index+=1
 
 print A
-b = numpy.zeros(shape=(dimension,1))
+l = numpy.zeros(shape=(dimension,1))
 offset = b + r - 2
 for i = 0 to len(batteries):
-    b[i + offset] = [batteries[i].voltage]
-x = np.solve(A, b)
+    l[i + offset] = [batteries[i].voltage]
+x = np.solve(A, l)
 
 print x
