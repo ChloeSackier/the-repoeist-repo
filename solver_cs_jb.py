@@ -13,24 +13,18 @@ class component:                        #Every component has two terminals, volt
     def __init__(self, node1, node2):
         self.node1 = node1
         self.node2 = node2
-        self.vnode1 = 0
-        self.vnode2 = 0
 
 class battery(component):               #Batteries feature a voltage characteristic
     def __init__(self, node1, node2, voltage):
         self.voltage = voltage
         self.node1 = node1
         self.node2 = node2
-        self.vnode1 = 0
-        self.vnode2 = 0
 
 class resistor(component):              #Resistors feature a resistance characteristic
     def __init__(self, node1, node2, resistance):
         self.resistance = resistance
         self.node1 = node1
         self.node2 = node2
-        self.vnode1 = 0
-        self.vnode2 = 0
 
 def search(node, listName, listItem):
     for i in range(len(batteries)):
@@ -89,16 +83,28 @@ index = 0
 for i in nodeLists:
     for batt in batteries:
         if batt.node1 == int(i) or batt.node2 == int(i):
-            temp = A[dimension + batteries.index(batt) - 1]
-            col = nodeLists.index(str(batt.node1))
-            temp[col] += 1
-            A[dimension + batteries.index(batt) - 1] = temp
+            if(batt.node1 == int(i)):
+                temp = A[dimension + batteries.index(batt) - 1]
+                col = nodeLists.index(str(batt.node1))
+                temp[col] += 1
+                A[dimension + batteries.index(batt) - 1] = temp
 
-            if str(batt.node2) in nodeLists:
+                if str(batt.node2) in nodeLists:
+                    temp = A[dimension + batteries.index(batt) - 1]
+                    col = nodeLists.index(str(batt.node2))
+                    temp[col] -= 1
+                    A[dimension + batteries.index(batt) - 1] = temp
+            else:
                 temp = A[dimension + batteries.index(batt) - 1]
                 col = nodeLists.index(str(batt.node2))
-                temp[col] -= 1
+                temp[col] += 1
                 A[dimension + batteries.index(batt) - 1] = temp
+
+                if str(batt.node1) in nodeLists:
+                    temp = A[dimension + batteries.index(batt) - 1]
+                    col = nodeLists.index(str(batt.node1))
+                    temp[col] -= 1
+                    A[dimension + batteries.index(batt) - 1] = temp               
             
             temp = A[index]
             temp[dimension + batteries.index(batt) - 1] += 1
