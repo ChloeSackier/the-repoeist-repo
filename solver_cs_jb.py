@@ -52,10 +52,8 @@ b = input("Number of batteries: ")
 r = input("Number of resistors: ")
 
 dimension = 2*b + r - 2
-print dimension
 
 A = numpy.zeros(shape=(dimension,dimension))
-print A
 
 #X = numpy.matrix
 
@@ -83,13 +81,9 @@ for res in resistors:
     if ((str(res.node2)) not in nodeLists):
         nodeLists.append(str(res.node2))
 
-print nodeLists
-
 gndNode = input("Which node should be ground? ")
 
 nodeLists.remove(str(gndNode))
-
-print nodeLists
 
 index = 0
 for i in nodeLists:
@@ -115,9 +109,6 @@ for i in nodeLists:
             temp[dimension + batteries.index(batt) - 1] += 1
             A[index] = temp
 
-    print A
-    print "MOVING TO RESISTORS"
-
     for res in resistors:
         if res.node1 == int(i) or res.node2 == int(i):
             print "ADDING RESISTOR #", resistors.index(res)+1
@@ -131,7 +122,6 @@ for i in nodeLists:
                 else:
                     temp[col] -= 1.0/(res.resistance) 
                 A[index] = temp
-                print A
 
             if str(res.node2) in nodeLists:
                 temp = A[index]
@@ -143,11 +133,9 @@ for i in nodeLists:
                 else:
                     temp[col] -= 1.0/(res.resistance) 
                 A[index] = temp
-                print A
             
     index+=1
 
-print A
 l = numpy.zeros(shape=(dimension,1))
 offset = b + r - 2
 for i in range(len(batteries)):
