@@ -54,8 +54,10 @@ r = input("Number of resistors: ")
 dimension = 2*b + r - 2
 print dimension
 
-a = numpy.zeros(shape=(dimension,dimension))
-print a
+A = numpy.zeros(shape=(dimension,dimension))
+print A
+
+#X = numpy.matrix
 
 for i in range(b):                  
     newBat = input("Battery info as Node1, Node2, Volts: ")
@@ -89,7 +91,60 @@ nodeLists.remove(str(gndNode))
 
 print nodeLists
 
+index = 0
 for i in nodeLists:
-
+    print
+    print
+    print "###NODE CHANGE -- Working on Node ", i
     for batt in batteries:
-        pass
+        print "Battery node 1 = ", batt.node1
+        print batt.node1 == int(i)
+        if batt.node1 == int(i) or batt.node2 == int(i):
+            temp = A[dimension + batteries.index(batt) - 1]
+            col = nodeLists.index(str(batt.node1))
+            temp[col] += 1
+            A[dimension + batteries.index(batt) - 1] = temp
+
+            if str(batt.node2) in nodeLists:
+                temp = A[dimension + batteries.index(batt) - 1]
+                col = nodeLists.index(str(batt.node2))
+                temp[col] -= 1
+                A[dimension + batteries.index(batt) - 1] = temp
+            
+            temp = A[index]
+            temp[dimension + batteries.index(batt) - 1] += 1
+            A[index] = temp
+
+    print A
+    print "MOVING TO RESISTORS"
+
+    for res in resistors:
+        if res.node1 == int(i) or res.node2 == int(i):
+            print "ADDING RESISTOR #", resistors.index(res)+1
+            if str(res.node1) in nodeLists:
+                temp = A[index]
+                col = nodeLists.index(str(res.node1))
+                print "Adding to row ", index
+                print "Adding to col ", col
+                if(res.node1 == int(i)):
+                    temp[col] += 1.0/(res.resistance)
+                else:
+                    temp[col] -= 1.0/(res.resistance) 
+                A[index] = temp
+                print A
+
+            if str(res.node2) in nodeLists:
+                temp = A[index]
+                col = nodeLists.index(str(res.node2))
+                print "Adding to row ", index
+                print "Adding to col ", col
+                if(res.node2 == int(i)):
+                    temp[col] += 1.0/(res.resistance)
+                else:
+                    temp[col] -= 1.0/(res.resistance) 
+                A[index] = temp
+                print A
+            
+    index+=1
+
+print A
