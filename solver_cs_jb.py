@@ -87,12 +87,7 @@ nodeLists.remove(str(gndNode))
 
 index = 0
 for i in nodeLists:
-    print
-    print
-    print "###NODE CHANGE -- Working on Node ", i
     for batt in batteries:
-        print "Battery node 1 = ", batt.node1
-        print batt.node1 == int(i)
         if batt.node1 == int(i) or batt.node2 == int(i):
             temp = A[dimension + batteries.index(batt) - 1]
             col = nodeLists.index(str(batt.node1))
@@ -111,12 +106,9 @@ for i in nodeLists:
 
     for res in resistors:
         if res.node1 == int(i) or res.node2 == int(i):
-            print "ADDING RESISTOR #", resistors.index(res)+1
             if str(res.node1) in nodeLists:
                 temp = A[index]
                 col = nodeLists.index(str(res.node1))
-                print "Adding to row ", index
-                print "Adding to col ", col
                 if(res.node1 == int(i)):
                     temp[col] += 1.0/(res.resistance)
                 else:
@@ -126,8 +118,6 @@ for i in nodeLists:
             if str(res.node2) in nodeLists:
                 temp = A[index]
                 col = nodeLists.index(str(res.node2))
-                print "Adding to row ", index
-                print "Adding to col ", col
                 if(res.node2 == int(i)):
                     temp[col] += 1.0/(res.resistance)
                 else:
